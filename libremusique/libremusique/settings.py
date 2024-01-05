@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'libremusique',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -47,6 +49,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
 ]
 
 ROOT_URLCONF = "libremusique.urls"
@@ -79,6 +88,20 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'LibreMusique',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            },
+        }
+    }
 
 
 # Password validation
@@ -121,3 +144,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+import firebase_admin
+from firebase_admin import credentials
+
+cred = credentials.Certificate('/Users/vineetarora/Desktop/libre-musique/libremusique-38871-firebase-adminsdk-zedq2-b02383cf59.json')
+firebase_admin.initialize_app(cred)
+
